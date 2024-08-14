@@ -1,0 +1,57 @@
+@model CommentListViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+    <div class="col-md-10">
+        <div class="row">
+            <h1 class="h3">Submitted Comment Information</h1>
+            <hr>
+        </div>
+    <div class="row">
+            <table id="myTable" class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>CommentId</th>
+                        <th>CommentText</th>
+                        <th>ProductId</th>
+                        <th>UserName</th>
+                        <th>CommentDate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var comments in Model.Comments)
+                    {
+                        <tr>
+                            <td>@comments.CommentId</td>
+                            <td>@comments.CommentText</td>
+                            <td>@comments.ProductId</td>
+                            <td>@comments.UserName</td>
+                            <td>@comments.CommentDate</td>
+                            <td>              
+                                <form action="/admin/deletecomment" method="POST" style="display: inline;">
+                                    <input type="hidden" name="commentId" value="@comments.CommentId">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+</body>
+</html>

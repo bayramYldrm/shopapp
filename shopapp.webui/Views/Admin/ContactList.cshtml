@@ -1,0 +1,56 @@
+@model ContactListViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+    <div class="col-md-10">
+        <div class="row">
+            <h1 class="h3">Submitted Contact Information</h1>
+            <hr>
+        </div>
+        <div class="row">
+            <table id="myTable" class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Action</th> <!-- Silme işlemi için ekledim -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contact in Model.Contacts)
+                    {
+                        <tr>
+                            <td>@contact.Id</td>
+                            <td>@contact.Name</td>
+                            <td>@contact.Email</td>
+                            <td>@contact.Message</td>
+                            <td>              
+                                <form action="/admin/deletecontact" method="POST" style="display: inline;">
+                                    <input type="hidden" name="contactId" value="@contact.Id">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+</body>
+</html>

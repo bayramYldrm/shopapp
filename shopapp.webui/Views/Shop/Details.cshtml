@@ -1,0 +1,459 @@
+@model ProductDetailModel
+<style>
+body{margin-top:20px;
+background:#eee;
+}
+.review-list ul li .left span {
+     width: 32px;
+     height: 32px;
+     display: inline-block;
+}
+ .review-list ul li .left {
+     flex: none;
+     max-width: none;
+     margin: 0 10px 0 0;
+}
+ .review-list ul li .left span img {
+     border-radius: 50%;
+}
+ .review-list ul li .right h4 {
+     font-size: 16px;
+     margin: 0;
+     display: flex;
+}
+ .review-list ul li .right h4 .gig-rating {
+     display: flex;
+     align-items: center;
+     margin-left: 10px;
+     color: #ffbf00;
+}
+ .review-list ul li .right h4 .gig-rating svg {
+     margin: 0 4px 0 0px;
+}
+ .country .country-flag {
+     width: 16px;
+     height: 16px;
+     vertical-align: text-bottom;
+     margin: 0 7px 0 0px;
+     border: 1px solid #fff;
+     border-radius: 50px;
+     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+ .country .country-name {
+     color: #95979d;
+     font-size: 13px;
+     font-weight: 600;
+}
+.review-list {
+    height: 530px;
+    overflow-y: scroll;
+}
+ .review-list ul li {
+     border-bottom: 1px solid #dadbdd;
+     padding: 0 0 30px;
+     margin: 0 0 30px;
+}
+ .review-list ul li .right {
+     flex: auto;
+}
+ .review-list ul li .review-description {
+     margin: 20px 0 0;
+}
+ .review-list ul li .review-description p {
+     font-size: 14px;
+     margin: 0;
+}
+ .review-list ul li .publish {
+     font-size: 13px;
+     color: #95979d;
+}
+
+.review-section h4 {
+     font-size: 20px;
+     color: #222325;
+     font-weight: 700;
+}
+ .review-section .stars-counters tr .stars-filter.fit-button {
+     padding: 6px;
+     border: none;
+     color: #4a73e8;
+     text-align: left;
+}
+ .review-section .fit-progressbar-bar .fit-progressbar-background {
+     position: relative;
+     height: 8px;
+     background: #efeff0;
+     -webkit-box-flex: 1;
+     -ms-flex-positive: 1;
+     flex-grow: 1;
+     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+     background-color: #ffffff;
+    ;
+     border-radius: 999px;
+}
+ .review-section .stars-counters tr .star-progress-bar .progress-fill {
+     background-color: #ffb33e;
+}
+ .review-section .fit-progressbar-bar .progress-fill {
+     background: #2cdd9b;
+     background-color: rgb(29, 191, 115);
+     height: 100%;
+     position: absolute;
+     left: 0;
+     z-index: 1;
+     border-radius: 999px;
+}
+ .review-section .fit-progressbar-bar {
+     display: flex;
+     align-items: center;
+}
+ .review-section .stars-counters td {
+     white-space: nowrap;
+}
+ .review-section .stars-counters tr .progress-bar-container {
+     width: 100%;
+     padding: 0 10px 0 6px;
+     margin: auto;
+}
+ .ranking h6 {
+     font-weight: 600;
+     padding-bottom: 16px;
+}
+ .ranking li {
+     display: flex;
+     justify-content: space-between;
+     color: #95979d;
+     padding-bottom: 8px;
+}
+ .review-section .stars-counters td.star-num {
+     color: #4a73e8;
+}
+ .ranking li>span {
+     color: #62646a;
+     white-space: nowrap;
+     margin-left: 12px;
+}
+ .review-section {
+     border-bottom: 1px solid #dadbdd;
+     padding-bottom: 24px;
+     margin-bottom: 34px;
+     padding-top: 64px;
+}
+ .review-section select, .review-section .select2-container {
+     width: 188px !important;
+     border-radius: 3px;
+}
+ul, ul li {
+    list-style: none;
+    margin: 0px;
+}
+.helpful-thumbs, .helpful-thumb {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+}
+</style>
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/img/@Model.Product.ImageUrl" class="img-fluid">
+    </div>
+    <div class="col-md-9">                
+            <h1 class="mb-3">@Model.Product.Name</h5> <hr>
+
+            @foreach (var item in Model.Categories)
+            {
+                <a asp-controller="shop" asp-action="list" asp-route-category="@item.Url" class="btn btn-link p-0 mb-3">@item.Name</a> 
+            }                          
+            
+            <div class="mb-3">
+                <h4 class="text-primary mb-3">
+                    <i class="fas fa-lira-sign"></i>@Model.Product.Price
+                </h4>
+                
+                <form asp-controller="Cart" asp-action="AddToCart" method="POST" class="form-inline">
+                    <input type="hidden" name="productId" value="@Model.Product.ProductId">
+                    <div class="input-group mb-3">
+                        <input type="number" name="quantity" class="form-control" value="1" min="1" step="1" style="width: 100px;">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-cart-plus"></i>Add to Cart                                
+                            </button>
+                        </div>
+                    </div>     
+               
+                </form>
+            </h6>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 p-5">
+        <p class="p-3">@Html.Raw(Model.Product.Description)</p>
+    </div>
+</div>
+<!-- Comment Body -->
+
+<!-- List Comment -->
+<div class="container">
+    <hr>
+    <div id="reviews" class="review-section">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="m-0">Total Number of Comments (@Model.TotalComments)</h4>
+            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 188px;">
+                <span class="selection">
+                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-qd66-container">
+                        <h4 class="m-0">Most Relevant</h4>
+                        <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                    </span>
+                </span>
+                <span class="dropdown-wrapper" aria-hidden="true"></span>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="stars-counters">
+                    <tbody>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">Excellent</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 100%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">5</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">Very Good</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 80%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">4</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">Good</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 60%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">3</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">Fair</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 40%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">2</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">Poor</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 20%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <div class="ranking">
+                    <h6 class="text-display-7">Rating Breakdown</h6>
+                    <ul>
+                        <li>
+                            Average Rating Given by Users: <span>@Model.AverageVotePoint.ToString("0.0")<span class="review-star rate-10 show-one"></span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <hr>
+@* form *@
+  <div class="col">
+    <div class="row">
+      <div class="col mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="e-profile">
+              <ul class="nav nav-tabs">
+                <li class="nav-item"><a href="" class="active nav-link">Share Your Feedback With Us</a></li>
+              </ul>
+              <div class="tab-content pt-3">
+                <div class="tab-pane active">
+                  <form asp-controller="Shop" asp-action="CommentCreate" method="POST">
+                    <input type="hidden" name="productId" value="@Model.Product.ProductId">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                                <label for="CommentIcon">City:</label>
+                                <textarea class="form-control" id="CommentIcon" name="CommentIcon" rows="1"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col mb-3">
+                            <div class="form-group">
+                              <label for="CommentText">Comment:</label>
+                              <textarea class="form-control" id="CommentText" name="CommentText" rows="5"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                        <div class="row">
+                            <label for="VotePoint">Product Point:</label>
+                                <select class="form-control" id="VotePoint" name="VotePoint">
+                                    <option selected="">Select Point</option>
+                                    <option>5</option>
+                                    <option>4</option>
+                                    <option>3</option>
+                                    <option>2</option>
+                                    <option>1</option>
+                                </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-3 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-title font-weight-bold">Support</h6>
+            <p class="card-text">Get fast, free help from our friendly assistants.</p>
+            <a href="/home/contact/create" class="btn btn-primary">Contact Us</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div> <hr>
+    <div class="review-list">
+        <ul>
+            <li>
+                @if (Model.Comments != null && Model.Comments.Any())
+                {
+                    foreach (var comment in Model.Comments)
+                    {
+                        <div style="height: 1px; background-color: #ffb33e;"></div>
+                        <div class="d-flex mt-4">
+                            <div class="left">
+                                <span>
+                                    <!-- İlgili görsel veya ikon buraya gelebilir -->
+                                </span>
+                            </div>
+                            <div class="right">
+                                @{
+                                    // Votepoint değeri
+                                    int votePoint = comment.VotePoint;
+                                    
+                                    // Dolu yıldız sayısı
+                                    int filledStars = votePoint;
+
+                                    // Boş yıldız sayısı
+                                    int emptyStars = 5 - votePoint;
+
+                                    // Dolu yıldızları göstermek için
+                                    string filledStarHtml = "<i class='fas fa-star' style='color: #ffb33e;'></i>";
+
+                                    // Boş yıldızları göstermek için
+                                    string emptyStarHtml = "<i class='far fa-star' style='color: #ffb33e;'></i>";
+                                }
+
+                                <h4 style="font-size: 16px;">
+                                    @comment.UserName &nbsp;&nbsp; &nbsp;  @comment.VotePoint &nbsp;
+                                    @for (int i = 0; i < filledStars; i++)
+                                    {
+                                        @Html.Raw(filledStarHtml)
+                                    }
+                                    @for (int i = 0; i < emptyStars; i++)
+                                    {
+                                        @Html.Raw(emptyStarHtml)
+                                    }
+                                </h4>
+
+                                <span class="gig-rating text-body-2" style="font-size: 12px;">@comment.CommentIcon</span>
+                                <div class="country d-flex align-items-center">
+                                    <!-- Ülke bilgisi veya başka bir bilgi buraya gelebilir -->
+                                </div>
+                                <div class="review-description">
+                                    <p style="font-size: 15px;">@comment.CommentText</p>
+                                </div>
+                                <span class="publish py-3 d-inline-block w-100">Published @comment.CommentDate.ToShortDateString() @comment.CommentDate.ToShortTimeString()
+</span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Henüz yorum yok.</p>
+                }
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
+
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
+@section Scripts
+{
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

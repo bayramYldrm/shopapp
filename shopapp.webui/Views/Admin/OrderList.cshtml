@@ -1,0 +1,84 @@
+@model IEnumerable<OrderListModel>
+
+@section Css
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+}
+  
+@section Scripts
+{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
+<div class="col-md-10">
+    <div class="row">
+        <h1 class="h3">Order List</h1>
+        <hr>
+    </div>
+    <div class="row">
+        <table id="myTable" class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th style="font-size: 12px;">Order ID</th>
+                    <th style="font-size: 12px;">Order Date</th>
+                    <th style="font-size: 12px;">Customer</th>
+                    <th style="font-size: 12px;">Email</th>
+                    <th style="font-size: 12px;">Phone</th>
+                    <th style="font-size: 12px;">Payment Type</th>
+                    <th style="font-size: 12px;">Total Price</th>
+                    <th style="font-size: 12px;">Order State</th>
+                    <th style="font-size: 12px;">Order State2</th>
+                    <th style="font-size: 12px;">Delivery Date</th>
+                    <th style="font-size: 12px;">Shipping Company</th>
+                    <th style="font-size: 12px;">Order Notes</th>
+                    <th style="font-size: 12px;">Order Items</th>
+                    <th style="font-size: 12px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td style="font-size: 12px;">@order.OrderNumber</td>
+                        <td style="font-size: 12px;">@order.OrderDate</td>
+                        <td style="font-size: 12px;">@order.FirstName @order.LastName</td>
+                        <td style="font-size: 12px;">@order.Email</td>
+                        <td style="font-size: 12px;">@order.Phone</td>
+                        <td style="font-size: 12px;">@order.PaymentType</td>
+                        <td style="font-size: 12px;">@order.TotalPrice().ToString("c")</td>
+                        <td style="font-size: 12px;">@order.OrderState</td>
+                        <td style="font-size: 12px;">@order.OrderState2</td>
+                        <td style="font-size: 12px;">@order.DeliveryDate</td>
+                        <td style="font-size: 12px;">@order.ShippingCompany</td>
+                        <td style="font-size: 12px;">@order.OrderNotes</td>
+                        <td>
+                            <ul>
+                                @foreach (var item in order.OrderItems)
+                                {
+                                    <li>
+                                        <span style="font-size: 10px;">@item.Name</span>
+                                        <span style="font-size: 10px;">Price: @item.Price</span>
+                                        <span style="font-size: 10px;">Quantity: @item.Quantity</span>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <a href="/admin/orders/edit/@order.OrderId" class="btn btn-primary btn-sm mr-2">Edit</a>
+                            <form action="/admin/orders/delete/@order.OrderId" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

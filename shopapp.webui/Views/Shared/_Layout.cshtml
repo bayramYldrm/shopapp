@@ -1,0 +1,67 @@
+@using Newtonsoft.Json
+@using shopapp.webui.Extensions
+@using shopapp.webui.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link rel="stylesheet" href="/modules/bootstrap/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/style.css">
+    @RenderSection("Css",false)
+    <link rel="icon" type="image/png" href="~/img/favicon-96x96.png">
+
+    <title>Shopapp</title>
+</head>
+<body>
+
+    @await Html.PartialAsync("_navbar")          
+
+    <main class="my-3">
+        <div class="container">     
+
+            @if(TempData["message"]!=null)
+            {
+                <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))"/>
+            }      
+             
+            @RenderBody()             
+        </div>
+    </main>
+
+<div class="container-fluid">
+  <footer class="py-5 my-5 border-top bg-dark">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5">
+<div class="col mb-3">
+  <div class="ml-3">
+    <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
+      <img src="~/img/logo3.png" alt="Shopapp Logo" style="width: 150px; height: auto; margin-right: 10px;">
+      <span class="text-light" style="font-size: 1.5rem;">WORLD THUNDER TECHNOLOGIES</span>
+    </a>
+    <p class="text-light">&copy; 2024</p>
+  </div>
+</div>
+      <div class="col mb-3">
+      </div>
+      <div class="col mb-3">
+      </div>
+      <div class="col mb-3">
+        <h5 class="text-light" >Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-light">Home</a></li>
+          <li class="nav-item mb-2"><a href="/home/about" class="nav-link p-0 text-light">About</a></li>
+          <li class="nav-item mb-2"><a href="/home/contact/create" class="nav-link p-0 text-light">Contact</a></li>
+          <li class="nav-item mb-2"><a href="/home/stores" class="nav-link p-0 text-light">Stores</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    @RenderSection("Scripts",false)
+</body>
+</html>
