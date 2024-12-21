@@ -1,7 +1,5 @@
 #World Thunder Technologies
 
-Elbette, işte README dosyanızın İngilizce çevirisi:
-
 World Thunder Technologies
 The World Thunder Technologies project aims to create an e-commerce site serving the technology sector.
 This project is shaped by the continuous advancement of technological devices and the corresponding increase in demand.
